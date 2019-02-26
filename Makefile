@@ -4,8 +4,9 @@ GOBUILD=$(GOCMD) build
 GOCLEAN=$(GOCMD) clean
 GOTEST=$(GOCMD) test
 GOGET=$(GOCMD) get
-BINARY_NAME=go-test-rp
+BINARY_NAME=go-kanoah
 BINARY_UNIX=$(BINARY_NAME)_unix
+VERSION := $(shell git describe --always --long --dirty)
 
 packages := $(shell go list ./... | grep -v /vendor/)
 
@@ -13,11 +14,7 @@ all: test build
 
 .PHONY: build
 build:
-	$(GOBUILD) -o $(BINARY_NAME) -v
-
-#mock:
-#	go get github.com/vektra/mockery/.../
-#	mockery -dir integration -output integration/mocks -name Clientable
+	$(GOBUILD) -ldflags "-X main.version=${VERSION}" -o $(BINARY_NAME) -v
 
 .PHONY: test
 test: clean

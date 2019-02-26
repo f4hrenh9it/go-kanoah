@@ -1,0 +1,8 @@
+include: 'https://gitlab.ozon.ru/qa/templates/gitlab-ci/raw/master/common-pipelines.yml'
+
+stages:
+  - docker image
+
+latest tag:
+  extends: .build-push-docker-image-tag-latest
+  stage: docker image

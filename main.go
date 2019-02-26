@@ -2,9 +2,12 @@ package main
 
 import (
 	"flag"
+	"fmt"
 	"github.com/f4hrenh9it/go-kanoah/integration"
 	"log"
 )
+
+var version string
 
 func main() {
 	reportFilename := flag.String("json_report", "", "go test json report file path")
@@ -21,6 +24,7 @@ func main() {
 	if *jiraUser == "" || *jiraPasswd == "" {
 		log.Fatal("provide your jira user and password, ex. --jira_user abc --jira_passwd 123")
 	}
+	fmt.Printf("ver: %s\n", version)
 	c := integration.New(*jiraApiUrl, *project, *testrunName, *jiraUser, *jiraPasswd, nil, *logLevel)
 	c.ParseEvents(*reportFilename)
 	tests := c.GroupEventsByPackage()
